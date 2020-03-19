@@ -39,7 +39,9 @@ const Home: FC = () => {
 	if (!data) return <span>Loading</span>;
 	return (
 		<div>
+			<span>Name: </span>
 			<input type='text' onChange={(e) => changeEvent('nameStartsWith', e.target.value)} />
+			<span>Gender: </span>
 			<select onChange={(e) => changeEvent('gender', e.target.value)}>
 				<option value=''>no filter</option>
 				<option value='UNKNOWN'>unknown</option>
@@ -47,6 +49,7 @@ const Home: FC = () => {
 				<option value='FEMALE'>female</option>
 				<option value='HERMAPHRODITE'>hermaphrodite</option>
 			</select>
+			<span>Birth Year: </span>
 			<input type='number' onChange={(e) => changeEvent('birthYear', e.target.value)} />
 			{data.allPersons.map(({ id, name, gender, _filmsMeta: { count } }) => (
 				<div key={id}><Link to={`/${id}`}>{name}</Link> - {gender} / {id}</div>

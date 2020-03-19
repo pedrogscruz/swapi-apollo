@@ -15,7 +15,7 @@ const Infos: FC<ImageModalProps> = ({ match: { params: { id } } }) => {
 			<div>Vehicles: {data.Person.vehicles?.map(({ name, model }) => `${name} (${model})`).join(', ') || <b>None</b>}</div>
 			<div>Species: {data.Person.species?.map(({ name, language }) => `${name} (${language})`).join(', ') || <b>None</b>}</div>
 		</div>
-	)
+	);
 }
 
 export default Infos;

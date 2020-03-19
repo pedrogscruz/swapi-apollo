@@ -12,8 +12,8 @@ const Infos: FC<ImageModalProps> = ({ match: { params: { id } } }) => {
 	return (
 		<div>
 			<div>{data.Person.name}</div>
-			<div>Vehicles: {data.Person.vehicles?.map(({ name, model }) => `${name} (${model})`).join(', ')}</div>
-			<div>Species: {data.Person.species?.map(({ name, language }) => `${name} (${language})`).join(', ')}</div>
+			<div>Vehicles: {data.Person.vehicles?.map(({ name, model }) => `${name} (${model})`).join(', ') || <b>None</b>}</div>
+			<div>Species: {data.Person.species?.map(({ name, language }) => `${name} (${language})`).join(', ') || <b>None</b>}</div>
 		</div>
 	)
 }

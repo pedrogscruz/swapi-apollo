@@ -1,7 +1,8 @@
 import React, { FC, useRef, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import useAllPersonsQuery from 'apollo/fetch/server/allPersons/useAllPersonsQuery';
-import { allPersonsVariables } from 'apollo/fetch/server/allPersons//types/allPersons';
 
+import { allPersonsVariables } from 'apollo/fetch/server/allPersons//types/allPersons';
 
 const Home: FC = () => {
 	const newVariables = useRef<allPersonsVariables>({});
@@ -47,8 +48,8 @@ const Home: FC = () => {
 				<option value='HERMAPHRODITE'>hermaphrodite</option>
 			</select>
 			<input type='number' onChange={(e) => changeEvent('birthYear', e.target.value)} />
-			{data.allPersons.map((item) => (
-				<div key={item.name}>{item.name} - {item.gender} / {item._filmsMeta.count}</div>
+			{data.allPersons.map(({ id, name, gender, _filmsMeta: { count } }) => (
+				<div key={id}><Link to={`/${id}`}>{name}</Link> - {gender} / {id}</div>
 			))}
 			<button disabled={loading || data.allPersons.length % 10 !== 0} onClick={getMorePersons}>fetch</button>
 		</div>

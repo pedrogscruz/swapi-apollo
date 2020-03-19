@@ -1,8 +1,11 @@
 import React, { FC, useRef, useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import useAllPersonsQuery from 'apollo/fetch/server/allPersons/useAllPersonsQuery';
-
 import { allPersonsVariables } from 'apollo/fetch/server/allPersons//types/allPersons';
+
+import useAllPersonsQuery from 'apollo/fetch/server/allPersons/useAllPersonsQuery';
+import Loading from 'components/Loading';
+import ScrollWrapper from './components/ScrollWrapper';
+import Item from './components/Item';
+import Text from 'components/Text';
 
 const Home: FC = () => {
 	const newVariables = useRef<allPersonsVariables>({});
@@ -36,24 +39,30 @@ const Home: FC = () => {
 			refetch(newVariables.current);
 	}, [loading]);
 
-	if (!data) return <span>Loading</span>;
+	if (!data) return <Loading />;
 	return (
 		<div>
-			<span>Name: </span>
-			<input type='text' onChange={(e) => changeEvent('nameStartsWith', e.target.value)} />
-			<span>Gender: </span>
-			<select onChange={(e) => changeEvent('gender', e.target.value)}>
-				<option value=''>no filter</option>
-				<option value='UNKNOWN'>unknown</option>
-				<option value='MALE'>male</option>
-				<option value='FEMALE'>female</option>
-				<option value='HERMAPHRODITE'>hermaphrodite</option>
-			</select>
-			<span>Birth Year: </span>
-			<input type='number' onChange={(e) => changeEvent('birthYear', e.target.value)} />
-			{data.allPersons.map(({ id, name, gender, _filmsMeta: { count } }) => (
-				<div key={id}><Link to={`/${id}`}>{name}</Link> - {gender} / {id}</div>
-			))}
+			<Text>
+				Name:
+				<input type='text' onChange={(e) => changeEvent('nameStartsWith', e.target.value)} />
+			</Text>
+			<Text>
+				Gender:
+				<select onChange={(e) => changeEvent('gender', e.target.value)}>
+					<option value=''>no filter</option>
+					<option value='UNKNOWN'>unknown</option>
+					<option value='MALE'>male</option>
+					<option value='FEMALE'>female</option>
+					<option value='HERMAPHRODITE'>hermaphrodite</option>
+				</select>
+			</Text>
+			<Text>
+				Birth Year:
+				<input type='number' onChange={(e) => changeEvent('birthYear', e.target.value)} />
+			</Text>
+			<ScrollWrapper>
+				{data.allPersons.map((person, index) => <Item person={person} last={index + 1 === data.allPersons.length} />)}
+			</ScrollWrapper>
 			<button disabled={loading || data.allPersons.length % 10 !== 0} onClick={getMorePersons}>fetch</button>
 		</div>
 	);

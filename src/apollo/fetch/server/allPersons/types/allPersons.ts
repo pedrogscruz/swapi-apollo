@@ -9,6 +9,11 @@ import { PERSON_GENDER } from "./../../../../graphql/types";
 // GraphQL query operation: allPersons
 // ====================================================
 
+export interface allPersons_allPersons__filmsMeta {
+  __typename: "_QueryMeta";
+  count: number;
+}
+
 export interface allPersons_allPersons {
   __typename: "Person";
   id: string;
@@ -17,11 +22,13 @@ export interface allPersons_allPersons {
    */
   name: string;
   /**
-   * The birth year of the person, using the in-universe standard of BBY or ABY -
-   * Before the Battle of Yavin or After the Battle of Yavin. The Battle of Yavin
-   * is a battle that occurs at the end of Star Wars episode IV: A New Hope.
+   *  The gender of this person. Will be "UNKNOWN" if not known or null if the person does not have a gender.
    */
-  birthYear: string | null;
+  gender: PERSON_GENDER | null;
+  /**
+   * Meta information about the query.
+   */
+  _filmsMeta: allPersons_allPersons__filmsMeta;
 }
 
 export interface allPersons {

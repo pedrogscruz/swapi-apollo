@@ -5,13 +5,26 @@ import { allPersonsVariables } from 'apollo/fetch/server/allPersons//types/allPe
 
 const Home: FC = () => {
 	const newVariables = useRef<allPersonsVariables>({});
-	const { loading, error, data, refetch, variables } = useAllPersonsQuery({ variables: { first: 10 } });
+	const { loading, data, variables, refetch, fetchMore } = useAllPersonsQuery({ variables: { first: 10 } });
 
 	const changeEvent = useCallback((field: keyof allPersonsVariables, value) => {
-		newVariables.current[field] = value;
-		console.log('loading', loading)
+		newVariables.current[field] = value || undefined; // some types doens`t accept an empty string
 		!loading && refetch(newVariables.current);
 	}, [loading]);
+
+	const getMorePersons = useCallback(() => {
+		if (!data) return;
+		fetchMore({
+			variables: { ...newVariables.current, skip: data.allPersons.length },
+			updateQuery: (previousResult, { fetchMoreResult }) => ({
+				allPersons: [
+					...previousResult.allPersons,
+					...fetchMoreResult?.allPersons || []
+				],
+				__typename: "Query"
+			})
+		});
+	}, [data?.allPersons.length]);
 
 	const stringnifyFilters = useCallback(({ nameStartsWith, gender, birthYear }: allPersonsVariables) => (
 		JSON.stringify({ nameStartsWith, gender, birthYear })
@@ -35,8 +48,9 @@ const Home: FC = () => {
 			</select>
 			<input type='number' onChange={(e) => changeEvent('birthYear', e.target.value)} />
 			{data.allPersons.map((item) => (
-				<div key={item.name}>{item.name} - {item.birthYear}</div>
+				<div key={item.name}>{item.name} - {item.gender} / {item._filmsMeta.count}</div>
 			))}
+			<button disabled={loading || data.allPersons.length % 10 !== 0} onClick={getMorePersons}>fetch</button>
 		</div>
 	);
 }

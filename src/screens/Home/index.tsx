@@ -4,9 +4,13 @@ import { allPersonsVariables } from 'apollo/fetch/server/allPersons//types/allPe
 import useAllPersonsQuery from 'apollo/fetch/server/allPersons/useAllPersonsQuery';
 import Loading from 'components/Loading';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import ScrollWrapper from './components/ScrollWrapper';
 import Item from './components/Item';
 import Text from 'components/Text';
+import Input from 'components/Input';
+import Select from 'components/Select';
+import Button from 'components/Button';
 
 const Home: FC = () => {
 	const newVariables = useRef<allPersonsVariables>({});
@@ -46,27 +50,29 @@ const Home: FC = () => {
 			<Header>
 			<Text>
 				Name:
-				<input type='text' onChange={(e) => changeEvent('nameStartsWith', e.target.value)} />
+				<Input type='text' onChange={(e) => changeEvent('nameStartsWith', e.target.value)} />
 			</Text>
 			<Text>
 				Gender:
-				<select onChange={(e) => changeEvent('gender', e.target.value)}>
-					<option value=''>no filter</option>
+				<Select onChange={(e) => changeEvent('gender', e.target.value)}>
+					<option value=''>any</option>
 					<option value='UNKNOWN'>unknown</option>
 					<option value='MALE'>male</option>
 					<option value='FEMALE'>female</option>
 					<option value='HERMAPHRODITE'>hermaphrodite</option>
-				</select>
+				</Select>
 			</Text>
 			<Text>
 				Birth Year:
-				<input type='number' onChange={(e) => changeEvent('birthYear', e.target.value)} />
+				<Input type='number' onChange={(e) => changeEvent('birthYear', e.target.value)} />
 			</Text>
 			</Header>
 			<ScrollWrapper>
 				{data.allPersons.map((person, index) => <Item person={person} last={index + 1 === data.allPersons.length} />)}
 			</ScrollWrapper>
-			<button disabled={loading || data.allPersons.length % 10 !== 0} onClick={getMorePersons}>fetch</button>
+			<Footer>
+				<Button disabled={loading || data.allPersons.length % 10 !== 0} onClick={getMorePersons}>fetch</Button>
+			</Footer>
 		</div>
 	);
 }

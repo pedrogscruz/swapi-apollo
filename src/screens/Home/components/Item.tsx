@@ -9,11 +9,12 @@ const Wrapper = styled.div<{last: boolean}>`
 	padding: 20px;
 `;
 
-const Name = styled.div`
+const Name = styled(Link)`
 	font-family: "News Cycle", sans-serif;
 	color: #FFD700;
 	font-weight: 800;
 	font-size: 20px;
+	text-decoration: none;
 	letter-spacing: .2em;
 `;
 
@@ -33,7 +34,7 @@ const Info = styled.div`
 const Item: FC<{ last: boolean, person: allPersons_allPersons }> = ({ last, person: { id, name, gender, _filmsMeta: { count } } }) => {
 	return (
 		<Wrapper last={last}>
-			<Link to={`/${id}`} style={{textDecoration: 'none'}}><Name>{name}</Name></Link>
+			<Name to={`/${id}`}>{name}</Name>
 			<InfoWrapper>
 				<Info>Gender: {gender}</Info>
 				<Info>Movies: {count}</Info>

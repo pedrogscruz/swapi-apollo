@@ -2,13 +2,14 @@ import React, { FC } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import usePersonQuery from 'apollo/fetch/server/Person/usePersonQuery';
+import Loading from 'components/Loading';
 import Text from 'components/Text';
 
 type ImageModalProps = RouteComponentProps<{ id: string }>;
 
 const Infos: FC<ImageModalProps> = ({ match: { params: { id } } }) => {
 	const { data } = usePersonQuery({ variables: { id }});
-	if (!data) return <span>Loading</span>;
+	if (!data) return <Loading />;
 	if (!data.Person) return <span>Not found</span>;
 	return (
 		<div>

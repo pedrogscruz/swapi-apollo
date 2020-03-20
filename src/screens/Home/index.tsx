@@ -3,14 +3,8 @@ import { allPersonsVariables } from 'apollo/fetch/server/allPersons//types/allPe
 
 import useAllPersonsQuery from 'apollo/fetch/server/allPersons/useAllPersonsQuery';
 import Loading from 'components/Loading';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import ScrollWrapper from './components/ScrollWrapper';
-import Item from './components/Item';
-import Text from 'components/Text';
-import Input from 'components/Input';
-import Select from 'components/Select';
-import Button from 'components/Button';
+import { Header, Footer, ScrollWrapper, Item } from './components';
+import { Text, Input, Select, Button } from 'components';
 
 const Home: FC = () => {
 	const newVariables = useRef<allPersonsVariables>({});

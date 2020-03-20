@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { allPersons_allPersons } from 'apollo/fetch/server/allPersons//types/allPersons';
 
 const Wrapper = styled.div<{last: boolean}>`
-	border-top: 2px white solid;
 	border-bottom: ${props => !props.last && '5px white solid'};
 	margin-bottom: 7px;
 	padding: 20px;
@@ -14,6 +13,7 @@ const Name = styled.div`
 	font-family: "News Cycle", sans-serif;
 	color: #FFD700;
 	font-weight: 800;
+	font-size: 20px;
 	letter-spacing: .2em;
 `;
 
@@ -24,10 +24,10 @@ const InfoWrapper = styled.div`
 
 const Info = styled.div`
 	font-family: "News Cycle", sans-serif;
-	color: #FFFFFF;
-	font-weight: 800;
+	color: #FFD700;
+	font-weight: 660;
+	font-size: 17px;
 	text-align: right;
-	text-shadow: 0 0 6px #14e1ee, 0 0 8px #14e1ee;
 `;
 
 const Item: FC<{ last: boolean, person: allPersons_allPersons }> = ({ last, person: { id, name, gender, _filmsMeta: { count } } }) => {

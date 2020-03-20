@@ -3,6 +3,7 @@ import { allPersonsVariables } from 'apollo/fetch/server/allPersons//types/allPe
 
 import useAllPersonsQuery from 'apollo/fetch/server/allPersons/useAllPersonsQuery';
 import Loading from 'components/Loading';
+import Header from './components/Header';
 import ScrollWrapper from './components/ScrollWrapper';
 import Item from './components/Item';
 import Text from 'components/Text';
@@ -42,6 +43,7 @@ const Home: FC = () => {
 	if (!data) return <Loading />;
 	return (
 		<div>
+			<Header>
 			<Text>
 				Name:
 				<input type='text' onChange={(e) => changeEvent('nameStartsWith', e.target.value)} />
@@ -60,6 +62,7 @@ const Home: FC = () => {
 				Birth Year:
 				<input type='number' onChange={(e) => changeEvent('birthYear', e.target.value)} />
 			</Text>
+			</Header>
 			<ScrollWrapper>
 				{data.allPersons.map((person, index) => <Item person={person} last={index + 1 === data.allPersons.length} />)}
 			</ScrollWrapper>

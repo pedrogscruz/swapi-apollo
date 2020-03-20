@@ -2,8 +2,7 @@ import React, { FC } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import usePersonQuery from 'apollo/fetch/server/Person/usePersonQuery';
-import Loading from 'components/Loading';
-import Text from 'components/Text';
+import { Loading, Text } from 'components';
 
 type ImageModalProps = RouteComponentProps<{ id: string }>;
 

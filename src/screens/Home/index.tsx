@@ -15,8 +15,11 @@ const Home: FC = () => {
 		!loading && refetch(newVariables.current);
 	}, [loading]);
 
-	const getMorePersons = useCallback(() => {
+	const fetching = useRef(false);
+	const getMorePersons = useCallback((e) => {
 		if (!data) return;
+		if (fetching.current) return;
+		fetching.current = true;
 		fetchMore({
 			variables: { ...newVariables.current, skip: data.allPersons.length },
 			updateQuery: (previousResult, { fetchMoreResult }) => ({
@@ -26,7 +29,10 @@ const Home: FC = () => {
 				],
 				__typename: "Query"
 			})
-		});
+		})
+			.then(() => {
+				fetching.current = false;
+			});
 	}, [data?.allPersons.length]);
 
 	const stringnifyFilters = useCallback(({ nameStartsWith, gender, birthYear }: allPersonsVariables) => (
@@ -62,7 +68,7 @@ const Home: FC = () => {
 			</Text>
 			</Header>
 			<ScrollWrapper>
-				{data.allPersons.map((person, index) => <Item person={person} last={index + 1 === data.allPersons.length} />)}
+				{data.allPersons.map((person, index) => <Item key={person.id} person={person} last={index + 1 === data.allPersons.length} />)}
 			</ScrollWrapper>
 			<Footer>
 				<Button disabled={loading || data.allPersons.length % 10 !== 0} onClick={getMorePersons}>fetch</Button>

@@ -19,7 +19,7 @@ const Content = styled.section`
 	letter-spacing: .1em;
 `;
 
-const Placholder = () => (
+const Placholder:FC = () => (
 	<Wrapper>
 		<Content>
 			A Long Time Ago, in a galaxy far,<br /> far away ...  
@@ -27,11 +27,11 @@ const Placholder = () => (
 	</Wrapper>
 );
 
-const Loading:FC<{loading: Boolean}> = ({ loading, children }) => (
-	<>
-		<Placholder  />
-		{!loading && children}
-	</>
-);
+// const Loading:FC<{loading: Boolean}> = ({ loading, children }) => (
+// 	<>
+// 		<Placholder  />
+// 		{!loading && children}
+// 	</>
+// );
 
 export default Placholder;
